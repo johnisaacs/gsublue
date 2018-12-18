@@ -1,0 +1,164 @@
+/*
+Theme Name: Blue Theme
+Author: Rebekah Hickey, Georgia Southern University Web Team
+Author URI: http://wordpress.georgiasouthern.edu
+Description: Standard Georgia Southern University theme.
+Version: 1.9.1
+Last Updated: 3/30/2016
+*/
+
+
+
+.news_item {border:none;}
+
+.floatleft {
+	float: left;
+	width: 35%;
+	}
+.clear {
+	clear: both;
+}
+
+strong {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: inherit;
+}
+
+/* UI, Buttons & Tabs */
+
+ul.tabs li a {
+	color: #333 !important;
+}
+
+/* Dept primary nav menu */
+#mainmenu {
+	position:static;
+	margin-top:0;
+}
+#mainmenu li, #mainmenu li a {
+	background-color:#041e42;
+	background-image:none;
+	opacity:1;
+	padding: 0 18px;	
+}
+
+#mainmenu li a:hover {
+	background-color:#00679a;
+	background-image:none;
+	opacity:1;
+}
+#mainmenu ul .current_page_item a, #mainmenu .current_page_ancestor a, #mainmenu .current-menu-item a, #mainmenu .current-menu-parent a {
+	background-color:#00679a;
+}
+#mainmenu ul.sub-menu {
+    background-color:#041e42;
+	background-image:none;
+	color:#fff;
+}
+#mainmenu ul.sub-menu li, #mainmenu ul.sub-menu li a {
+    background-color:#041e42;
+	background-image:none;
+	color:#fff;
+	z-index:1000;
+}
+#mainmenu ul.sub-menu li a:hover {
+	background-color:#00679a;
+	background-image:none;
+	color: #FFF;
+}
+
+ul.subnav {
+	margin-left: 0;
+	}
+
+ul.subnav li{
+    float: left;
+    list-style-type: none;
+    margin: -25px 0 25px 0;
+    padding: 0 25px 0 0;
+    width: auto;
+}
+ul.subnav li  a {
+	font-weight: 700;
+	}
+
+div.form-box {
+	border:1px solid #CCC;
+	padding: 15px;
+	margin-bottom: 15px;
+	}
+/* Home Page Styles */
+#home div#row2 h1 {
+	font-size:28px;
+	margin-top:-5px;
+	line-height:1.5em;
+	margin-bottom:0;
+	font-weight:600;
+}
+
+#home div#row3 h2 {
+	font-size:18px;
+	line-height:1.5em;
+	margin-bottom:0;
+	font-weight:400;	
+}
+	
+
+/* Sidebars & Widgets */
+#fp_featurewrap {
+    background: none;
+}
+.fp_feature {
+	border-top: 4px solid #041e42; 
+	}
+.fp_featurepad {	
+	height:auto;
+	}
+
+#sidebarpad-dept {
+	outline:0;
+	border:1px solid #eee;
+	padding:0 10px 0 18px;
+	margin-top:45px;
+}
+
+#sidebarpad-dept .sidebar-widget {
+	margin-bottom: 1em; 
+	clear:both;
+	}
+
+#sidebarpad-dept .pb_slideshow_cycle {
+	margin: 15px 0;
+	}
+	
+.widget_search {
+	clear:both;
+	margin: 15px 0;
+	}
+.widget_search #s {
+	width:65%;
+	float:left;
+	margin-right: 10px;
+	}
+.widget_search #submit {
+	width:15%;
+	float:left;	
+	}
+.widget_search label.screen-reader-text {
+    display: none;
+}
+	
+.widget_nav_menu  li {
+	list-style-type:none;
+
+}
+.widget_nav_menu  ul.sub-menu {
+	margin-left: 2em;	
+}
+.widget_nav_menu  ul.sub-menu li {
+	list-style-type:disc;	
+}
+/*a.rsswidget:hover {
+	color: #0583C0;
+	}
+*/
