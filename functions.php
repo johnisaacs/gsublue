@@ -127,6 +127,75 @@ $args = array(
 	'uploads'       => true,
 );
 add_theme_support( 'custom-header', $args );
+
+  /* Font Sizes */
+  add_theme_support( 'editor-font-sizes', array(
+    array(
+      'name' => __( 'Small', 'gsublue' ),
+      'size' => 11,
+      'slug' => 'small'
+    ),
+    array(
+      'name' => __( 'Normal', 'gsublue' ),
+      'size' => 13,
+      'slug' => 'normal'
+    ),
+    array(
+      'name' => __( 'Large', 'gsublue' ),
+      'size' => 18,
+      'slug' => 'large'
+    )
+  ));
+
+  /* Color Blocks */
+  add_theme_support( 'editor-color-palette', array(
+    array(
+      'name' => __( 'white', 'gsublue' ),
+      'slug' => 'white',
+      'color' => '#ffffff',
+    ),
+    array(
+      'name' => __( 'off-white', 'gsublue' ),
+      'slug' => 'off-white',
+      'color' => '#f7f7f7',
+    ),
+    array(
+      'name' => __( 'black', 'gsublue' ),
+      'slug' => 'black',
+      'color' => '#000000',
+    ),
+    array(
+      'name' => __( 'medium gray', 'gsublue' ),
+      'slug' => 'medium-gray',
+      'color' => '#dddddd',
+    ),
+    array(
+      'name' => __( 'light gray', 'gsublue' ),
+      'slug' => 'light-gray',
+      'color' => '#e4e4e4',
+    ),
+    array(
+      'name' => __( 'blue', 'gsublue' ),
+      'slug' => 'blue',
+      'color' => '#041e42',
+    ),
+    array(
+      'name' => __( 'aqua', 'gsublue' ),
+      'slug' => 'aqua',
+      'color' => '#00679a',
+    ),
+    array(
+      'name' => __( 'gold', 'gsublue' ),
+      'slug' => 'gold',
+      'color' => '#a99260',
+    ),
+    array(
+      'name' => __( 'gold fade', 'gsublue' ),
+      'slug' => 'gold-fade',
+      'color' => '#e9e4da',
+    ),
+  ));
+
 }
 add_action( 'after_setup_theme', 'custom_header_support' );
 
@@ -211,7 +280,7 @@ add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
 
 // Customize tinymce editor
 function customize_mce_buttons($init) {
-	$init['toolbar1'] = 'bold,italic,strikethrough,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,alignjustify,link,unlink,wp_more,spellchecker,fullscreen,wp_adv';
+	$init['toolbar1'] = 'bold,italic,strikethrough,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,alignjustify,link,unlink,wp_more,spellchecker,fullscreen,wp_adv,bootstrapshortcode';
 	$init['toolbar2'] = 'formatselect,pastetext,removeformat,charmap,superscript,subscript,outdent,indent,undo,redo,table,wp_help';
 	$init['block_formats'] = "Paragraph=p; Heading 2=h2; Heading 3=h3; Heading 4=h4; Heading 5=h5; Heading 6=h6";
 	return $init;
@@ -333,7 +402,7 @@ function digwp_complete_version_removal() {
 
 // clear rss widget cache every 15 mins
 //add_filter( 'wp_feed_cache_transient_lifetime', create_function( '$a', 'return 900;' ) );
-add_action('wp_feed_cache_transient_lifetime', function(){
+add_filter( 'wp_feed_cache_transient_lifetime', function(){
 		return 900;
 	});
 
@@ -350,4 +419,46 @@ function ssl_srcset( $sources ) {
   return $sources;
 }
 add_filter( 'wp_calculate_image_srcset', 'ssl_srcset' );
+
+// Track user last login time 
+add_action('wp_login','wpdb_capture_user_last_login', 10, 2);
+function wpdb_capture_user_last_login($user_login, $user){
+    update_user_meta($user->ID, 'last_login', current_time('mysql'));
+}
+
+// Display user last login time in WP Admin
+add_filter( 'manage_users_columns', 'wpdb_user_last_login_column');
+function wpdb_user_last_login_column($columns){
+    $columns['lastlogin'] = __('Last Login', 'lastlogin');
+    return $columns;
+}
+ 
+add_action( 'manage_users_custom_column',  'wpdb_add_user_last_login_column', 10, 3); 
+function wpdb_add_user_last_login_column($value, $column_name, $user_id ) {
+    if ( 'lastlogin' != $column_name )
+        return $value;
+ 
+    return get_user_last_login($user_id,false);
+}
+
+function get_user_last_login($user_id,$echo = true){
+    $date_format = get_option('date_format') . ' ' . get_option('time_format');
+    $last_login = get_user_meta($user_id, 'last_login', true);
+    $login_time = 'Never logged in';
+    if(!empty($last_login)){
+       if(is_array($last_login)){
+            $login_time = mysql2date($date_format, array_pop($last_login), false);
+        }
+        else{
+            $login_time = mysql2date($date_format, $last_login, false);
+        }
+    }
+    if($echo){
+        echo $login_time;
+    }
+    else{
+        return $login_time;
+    }
+}
+
 ?>
